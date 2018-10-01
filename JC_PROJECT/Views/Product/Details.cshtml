@@ -1,0 +1,182 @@
+﻿@model JC_PROJECT.Models.Product
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Identifiant)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Identifiant)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ShopId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ShopId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Origin)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Origin)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Weight)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Weight)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WeightUnit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WeightUnit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Lenght)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lenght)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LenghtUnit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LenghtUnit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Depth)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Depth)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DepthUnit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DepthUnit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Width)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Width)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WidthUnit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WidthUnit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Height)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Height)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.HeightUnit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.HeightUnit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Currency)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Currency)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Inventory)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Inventory)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Creation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Creation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Modification)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Modification)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "DisplayProducts", "Shop", new { id= Model.ShopId }, null)
+    </p>
+
+</body>
+</html>
