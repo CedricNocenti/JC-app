@@ -373,6 +373,15 @@ namespace JC_PROJECT.Controllers
             return false;
         }
 
+        private bool HasEmail()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if(user != null)
+            {
+                return user.Email != null;
+            }
+            return false;
+        }
         public enum ManageMessageId
         {
             AddPhoneSuccess,

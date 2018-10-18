@@ -45,7 +45,7 @@ namespace JC_PROJECT.Controllers
                 return View(Shops);
             }
         }
-
+        
         // GET: Shop/Details/5
         public async Task<ActionResult> DisplayProducts(int id)
         {

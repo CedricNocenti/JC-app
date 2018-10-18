@@ -49,7 +49,7 @@ namespace JC_PROJECT.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Courrier électronique")]
+        [Display(Name = "Adresse mail")]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -66,8 +66,19 @@ namespace JC_PROJECT.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Courrier électronique")]
+        [Display(Name = "Adresse email")]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(256, ErrorMessage ="Maximum de {1} caractères pour le nom d'utilisateur")]
+        [DataType(DataType.Text)]
+        [Display(Name ="Nom")]
+        public string UserName { get; set; }
+
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name ="Téléphone portable")]
+        public string PhoneNumber { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
@@ -77,7 +88,7 @@ namespace JC_PROJECT.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmer le mot de passe ")]
-        [Compare("Password", ErrorMessage = "Le mot de passe et le mot de passe de confirmation ne correspondent pas.")]
+        [Compare("Password", ErrorMessage = "Les mots de passe ne correspondent pas")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -96,7 +107,7 @@ namespace JC_PROJECT.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmer le mot de passe")]
-        [Compare("Password", ErrorMessage = "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas.")]
+        [Compare("Password", ErrorMessage = "Les mots de passe ne correspondent pas")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

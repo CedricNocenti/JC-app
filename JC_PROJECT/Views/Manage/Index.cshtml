@@ -1,14 +1,15 @@
 ﻿@model JC_PROJECT.Models.IndexViewModel
 @{
-    ViewBag.Title = "Gérer";
+    ViewBag.Title = "Gestion du compte";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Changer les paramètres de votre compte</h4>
+    <h4>Modifiez vos informations personnelles</h4>
     <hr />
+ 
     <dl class="dl-horizontal">
         <dt>Mot de passe :</dt>
         <dd>
@@ -35,12 +36,12 @@
                 pour plus de détails sur la configuration de cette application ASP.NET afin qu'elle prenne en charge l'utilisation de l'authentification à 2 facteurs à l'aide de SMS.
              
              Décommentez le bloc suivant après avoir configuré l'authentification à 2 facteurs
-        *@
-        @*  
-            <dt>Numéro de téléphone :</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
+        
+          
+           @ <dt>Numéro de téléphone :</dt>
+           @* <dd>
+                (Model.PhoneNumber ?? "None")
+                if (Model.PhoneNumber != null)
                 {
                     <br />
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
@@ -54,14 +55,14 @@
                 {
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
                 }
-            </dd>
-        *@
-        <dt>Authentification à 2 facteurs :</dt>
+            </dd> *@
+        
+       <dt>Authentification à 2 facteurs :</dt>
         <dd>
             <p>
                 Aucun fournisseur d'authentification à deux facteurs n'est configuré. Consultez <a href="https://go.microsoft.com/fwlink/?LinkId=403804">cet article</a>
                 pour plus de détails sur la configuration de cette application ASP.NET afin qu'elle prenne en charge l'authentification à deux facteurs.
-            </p>
+            </p> 
             @*@if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
