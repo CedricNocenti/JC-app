@@ -64,6 +64,8 @@ namespace JC_PROJECT.Models
 
     public class RegisterViewModel
     {
+        public string Role { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Adresse email")]
@@ -90,6 +92,7 @@ namespace JC_PROJECT.Models
         [Display(Name = "Confirmer le mot de passe ")]
         [Compare("Password", ErrorMessage = "Les mots de passe ne correspondent pas")]
         public string ConfirmPassword { get; set; }
+      
     }
 
     public class ResetPasswordViewModel
