@@ -50,7 +50,7 @@ namespace JC_PROJECT.Controllers
 			{
 				var user = User.Identity;
 				var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-				var s = UserManager.GetRoles(user.GetUserId());
+				var s = UserManager.GetRoles(user.GetUserId<int>());
                 try
                 {
                     if (s[0].ToString() == "Admin")
@@ -118,5 +118,7 @@ namespace JC_PROJECT.Controllers
 			context.SaveChanges();
 			return RedirectToAction("Index");
 		}
+
+       
 	}
 }

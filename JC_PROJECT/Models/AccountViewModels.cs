@@ -71,10 +71,8 @@ namespace JC_PROJECT.Models
         [Display(Name = "Adresse email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(256, ErrorMessage ="Maximum de {1} caractères pour le nom d'utilisateur")]
-        [DataType(DataType.Text)]
-        [Display(Name ="Nom")]
+   
+
         public string UserName { get; set; }
 
         [Phone]

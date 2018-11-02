@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JC_PROJECT.Models;
+using Oracle.ManagedDataAccess.Client;
 
 namespace JC_PROJECT.Controllers
 {
@@ -17,7 +18,7 @@ namespace JC_PROJECT.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        public const string connectionDB = "User Id=APP_DEV;Password=appDev2018!;Data Source=54.38.230.175/orcldev";
         public AccountController()
         {
         }
@@ -151,7 +152,7 @@ namespace JC_PROJECT.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -159,6 +160,24 @@ namespace JC_PROJECT.Controllers
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     if (model.Role == "Client")
                     {
+                        
+                         UserManager.AddToRole(user.Id, model.Role);
+
+                        string sql = "INSERT INTO JC_CUSTOMER (CUSTOMER_ID, CUSTOMER_EMAIL, CUSTOMER_CREATION_DATE, CUSTOMER_MODIFICATION_DATE) VALUES( " + user.Id + " , " + user.UserName + " , " + DateTime.Now + " , " + DateTime.Now + ")";
+                        using (var _db = new OracleConnection(connectionDB))
+                        {
+                            try
+                            {
+                                _db.Open();
+                                OracleCommand cmd = new OracleCommand(sql, _db);
+                                cmd.ExecuteNonQuery();
+                                _db.Close();
+                            }catch(OracleException OE)
+                            {
+                                return null;
+                            }
+                            
+                        }
                         //Associer le role Client dans AspNetIdentity
                         //Insérer le nouveau client dans la table JC_CUSTOMER
                     }
@@ -180,9 +199,9 @@ namespace JC_PROJECT.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(int userId, string code)
         {
-            if (userId == null || code == null)
+            if (userId == default(int) || code == null)
             {
                 return View("Error");
             }
