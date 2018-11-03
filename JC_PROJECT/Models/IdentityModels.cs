@@ -34,7 +34,7 @@ namespace JC_PROJECT.Models
         {
         }
     }
-
+   
     public class ApplicationUser : IdentityUser<int, CustomUserLogin , CustomUserRole, CustomUserClaim>
     {
 

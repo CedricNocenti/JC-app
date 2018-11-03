@@ -109,4 +109,20 @@ namespace JC_PROJECT
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+    public class ApplicationRoleManager : RoleManager<CustomRole, int>
+    {
+        // PASS CUSTOM APPLICATION ROLE AND INT AS TYPE ARGUMENTS TO CONSTRUCTOR:
+        public ApplicationRoleManager(IRoleStore<CustomRole, int> roleStore)
+            : base(roleStore)
+        {
+        }
+
+        // PASS CUSTOM APPLICATION ROLE AS TYPE ARGUMENT:
+        public static ApplicationRoleManager Create(
+            IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(
+                new CustomRoleStore(context.Get<ApplicationDbContext>()));
+        }
+    }
 }

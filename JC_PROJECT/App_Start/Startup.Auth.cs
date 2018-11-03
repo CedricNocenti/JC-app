@@ -47,7 +47,7 @@ namespace JC_PROJECT
             // Lorsque vous activez cette option, votre seconde étape de vérification pendant le processus de connexion est mémorisée sur le poste à partir duquel vous vous êtes connecté.
             // Ceci est similaire à l'option RememberMe quand vous vous connectez.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-
+            app.CreatePerOwinContext<ApplicationRoleManager>(Application‌​RoleManager.Create);
             // Supprimer les commentaires des lignes suivantes pour autoriser la connexion avec des fournisseurs de connexions tiers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
