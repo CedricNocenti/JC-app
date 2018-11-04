@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using JC_PROJECT.App_Start;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JC_PROJECT.Models
@@ -83,17 +85,17 @@ namespace JC_PROJECT.Models
         [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
         public string JLastName { get; set; }
 
-        [Required]
+        [RequiredIf("Role", "Client", "Attention, Code Postal requis!")]
         [Display(Name = "Code Postal")]
         [StringLength(5, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [RequiredIf("Role", "Client", "Attention, adresse requise!")]
         [Display(Name = "Rue")]
         [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
         public string Street { get; set; }
 
-        [Required]
+        [RequiredIf("Role", "Client", "Attention, Ville requise!")]
         [Display(Name = "Ville")]
         [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
         public string City { get; set; }
@@ -103,6 +105,12 @@ namespace JC_PROJECT.Models
         [Display(Name ="Téléphone portable")]
         public string PhoneNumber { get; set; }
 
+        public Int32 CreatedBy { get; set; }
+
+        [RequiredIf("Role", "Vendeur", "Attention, fonction requise!")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.")]
+        [Display(Name="Fonction")]
+        public string Function { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]

@@ -38,13 +38,7 @@ namespace JC_PROJECT.Models
    
     public class ApplicationUser : IdentityUser<int, CustomUserLogin , CustomUserRole, CustomUserClaim>
     {
-        //public string FirstName { get; set; }
-        //public string JLastName { get; set; }
-        //public string Street { get; set; }
-        //public string PostalCode { get; set; }
-        //public string City { get; set; }
-
-        
+ 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
         {
             // Notez qu'authenticationType doit correspondre à l'élément défini dans CookieAuthenticationOptions.AuthenticationType

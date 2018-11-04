@@ -210,9 +210,7 @@ namespace JC_PROJECT.Controllers
                                 return null;
                             }
 
-                        }
-
-                        //Insérer le nouveau client dans la table JC_CUSTOMER
+                        }    
                     }
                     else
                     {
@@ -245,7 +243,22 @@ namespace JC_PROJECT.Controllers
                                 {
 
                                 }
-
+                            }
+                            string sql2 = "INSERT INTO JC_SELLER (SELLER_ID, SELLER_EMAIL, SELLER_CREATION_DATE, SELLER_MODIFICATION_DATE, SELLER_PHONE,SELLER_FIRSTNAME, SELLER_LASTNAME, SELLER_FUNCTION, SELLER_CREATED_BY, SHOP_ID) " +
+                            "VALUES( " + user.Id + " , '" + user.UserName + "' , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , '" + user.PhoneNumber + "', '" + model.FirstName + "', '" + model.JLastName + "', '" + model.Function + "', " + model.CreatedBy + ", 1)";
+                            using (var _db = new OracleConnection(connectionDB))
+                            {
+                                try
+                                {
+                                    _db.Open();
+                                    OracleCommand cmd = new OracleCommand(sql2, _db);
+                                    cmd.ExecuteNonQuery();
+                                    _db.Close();
+                                }
+                                catch (OracleException OE)
+                                {
+                                    return null;
+                                }
 
                             }
                         }
