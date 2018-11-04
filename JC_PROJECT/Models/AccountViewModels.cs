@@ -53,6 +53,8 @@ namespace JC_PROJECT.Models
         [EmailAddress]
         public string Email { get; set; }
 
+       
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Mot de passe")]
@@ -71,14 +73,36 @@ namespace JC_PROJECT.Models
         [Display(Name = "Adresse email")]
         public string Email { get; set; }
 
-   
+        [Required]
+        [Display(Name = "Prénom")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
+        public string FirstName { get; set; }
 
-        public string UserName { get; set; }
+        [Required]
+        [Display(Name = "Nom")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
+        public string JLastName { get; set; }
+
+        [Required]
+        [Display(Name = "Code Postal")]
+        [StringLength(5, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
+        public string PostalCode { get; set; }
+
+        [Required]
+        [Display(Name = "Rue")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
+        public string Street { get; set; }
+
+        [Required]
+        [Display(Name = "Ville")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au maximum {2} caractères.")]
+        public string City { get; set; }
 
         [Phone]
         [DataType(DataType.PhoneNumber)]
         [Display(Name ="Téléphone portable")]
         public string PhoneNumber { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]

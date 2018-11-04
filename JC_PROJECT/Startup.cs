@@ -8,6 +8,7 @@ namespace JC_PROJECT
     {
         public void Configuration(IAppBuilder app)
         {
+           
             ConfigureAuth(app);
         }
     }

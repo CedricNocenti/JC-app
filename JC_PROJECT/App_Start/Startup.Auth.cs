@@ -18,6 +18,7 @@ namespace JC_PROJECT
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(Application‌​RoleManager.Create);
 
             // Autoriser l’application à utiliser un cookie pour stocker des informations pour l’utilisateur connecté
             // et pour utiliser un cookie à des fins de stockage temporaire des informations sur la connexion utilisateur avec un fournisseur de connexion tiers
@@ -31,7 +32,7 @@ namespace JC_PROJECT
                     // Permet à l'application de valider le timbre de sécurité quand l'utilisateur se connecte.
                     // Cette fonction de sécurité est utilisée quand vous changez un mot de passe ou ajoutez une connexion externe à votre compte.  
                     OnValidateIdentity = SecurityStampValidator
-                .OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>(
+                        .OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>(
                     validateInterval: TimeSpan.FromMinutes(30),
                     regenerateIdentityCallback: (manager, user) =>
                         user.GenerateUserIdentityAsync(manager),
@@ -47,7 +48,7 @@ namespace JC_PROJECT
             // Lorsque vous activez cette option, votre seconde étape de vérification pendant le processus de connexion est mémorisée sur le poste à partir duquel vous vous êtes connecté.
             // Ceci est similaire à l'option RememberMe quand vous vous connectez.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-            app.CreatePerOwinContext<ApplicationRoleManager>(Application‌​RoleManager.Create);
+            
             // Supprimer les commentaires des lignes suivantes pour autoriser la connexion avec des fournisseurs de connexions tiers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",

@@ -77,6 +77,7 @@ namespace JC_PROJECT.Controllers
 
             // Ceci ne comptabilise pas les échecs de connexion pour le verrouillage du compte
             // Pour que les échecs de mot de passe déclenchent le verrouillage du compte, utilisez shouldLockout: true
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -192,7 +193,9 @@ namespace JC_PROJECT.Controllers
                         
                             
                         }
-                        string sql2 = "INSERT INTO JC_CUSTOMER (CUSTOMER_ID, CUSTOMER_EMAIL, CUSTOMER_CREATION_DATE, CUSTOMER_MODIFICATION_DATE) VALUES( " + user.Id + " , '" + user.UserName + "' , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS'))";
+                        //Attention, user.UserName est l'email de l'utilisateur dans Identity
+                        string sql2 = "INSERT INTO JC_CUSTOMER (CUSTOMER_ID, CUSTOMER_EMAIL, CUSTOMER_CREATION_DATE, CUSTOMER_MODIFICATION_DATE, CUSTOMER_PHONE,CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_STREET, CUSTOMER_POSTAL_CODE, CUSTOMER_CITY) " +
+                            "VALUES( " + user.Id + " , '" + user.UserName + "' , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , '" + user.PhoneNumber + "', '" + model.FirstName + "', '" + model.JLastName + "', '" + model.Street + "', '" + model.PostalCode + "', '" + model.City + "')";
                         using (var _db = new OracleConnection(connectionDB))
                         {
                             try
@@ -293,8 +296,16 @@ namespace JC_PROJECT.Controllers
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
+            if (result.Succeeded)
+            {
+                return View("ConfirmEmail");
+            }
+            else
+            {
+                AddErrors(result);
+                return View();
+            }
         }
 
         //
@@ -400,7 +411,7 @@ namespace JC_PROJECT.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
+            if (userId == default(int))
             {
                 return View("Error");
             }

@@ -67,9 +67,9 @@ namespace JC_PROJECT.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
+                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
             return View(model);
