@@ -63,66 +63,39 @@ namespace JC_PROJECT.Models
         //Permet de récupérer toutes les informations concernant l'authentification
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
-            modelBuilder.HasDefaultSchema("AUTH_DEV"); //uppercase  
-            modelBuilder.Entity<CustomUserLogin>()
-            .HasKey(l => new { l.LoginProvider, l.ProviderKey, l.UserId })
-            .ToTable("AspNetUserLogins");
+            modelBuilder.HasDefaultSchema("AUTH_DEV");
+            modelBuilder
+                .Properties()
+                .Where(p => p.PropertyType == typeof(string) &&
+                            !p.Name.Contains("Id") &&
+                            !p.Name.Contains("Provider"))
+                .Configure(p => p.HasMaxLength(256));
+
+            modelBuilder.Entity<CustomRole>().ToTable("AspNetRoles").Property(c => c.Name).HasMaxLength(128).IsRequired();
+            modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers").Property(c => c.UserName).HasMaxLength(128).IsRequired();
+            modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers").Property(c => c.Email).HasMaxLength(128).IsRequired();
+
+
+            modelBuilder.Entity<CustomRole>()
+                .HasKey(r => new { r.Id })
+                .ToTable("AspNetRoles");
+            modelBuilder.Entity<CustomUserClaim>()
+                .HasKey(r => new { r.Id })
+                .ToTable("AspNetUserClaims");
             modelBuilder.Entity<CustomUserRole>()
             .HasKey(r => new { r.UserId, r.RoleId })
             .ToTable("AspNetUserRoles");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.UserName).HasColumnName("UserName");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.AccessFailedCount).HasColumnName("AccessFailedCount");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.LockoutEnabled).HasColumnName("LockoutEnabled");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.LockoutEndDateUtc).HasColumnName("LockoutEndDateUtc");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.TwoFactorEnabled).HasColumnName("TwoFactorEnabled");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.PhoneNumberConfirmed).HasColumnName("PhoneNumberConfirmed");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.PhoneNumber).HasColumnName("PhoneNumber");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.SecurityStamp).HasColumnName("SecurityStamp");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.PasswordHash).HasColumnName("PasswordHash");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.EmailConfirmed).HasColumnName("EmailConfirmed");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.Email).HasColumnName("Email");
-            modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers").Property(p => p.Id).HasColumnName("Id");
-            modelBuilder.Entity<CustomUserRole>()
-            .ToTable("AspNetUserRoles").Property(p => p.RoleId).HasColumnName("RoleId");
-            modelBuilder.Entity<CustomUserRole>()
-            .ToTable("AspNetUserRoles").Property(p => p.UserId).HasColumnName("UserId");
             modelBuilder.Entity<CustomUserLogin>()
-            .ToTable("AspNetUserLogins").Property(p => p.UserId).HasColumnName("UserId");
-            modelBuilder.Entity<CustomUserLogin>()
-            .ToTable("AspNetUserLogins").Property(p => p.ProviderKey).HasColumnName("ProviderKey");
-            modelBuilder.Entity<CustomUserLogin>()
-            .ToTable("AspNetUserLogins").Property(p => p.LoginProvider).HasColumnName("LoginProvider");
-            modelBuilder.Entity<CustomUserClaim>()
-            .ToTable("AspNetUserClaims").Property(p => p.Id).HasColumnName("Id");
-            modelBuilder.Entity<CustomUserClaim>()
-            .ToTable("AspNetUserClaims").Property(p => p.UserId).HasColumnName("UserId");
-            modelBuilder.Entity<CustomUserClaim>()
-            .ToTable("AspNetUserClaims").Property(p => p.ClaimType).HasColumnName("ClaimType");
-            modelBuilder.Entity<CustomUserClaim>()
-            .ToTable("AspNetUserClaims").Property(p => p.ClaimValue).HasColumnName("ClaimValue");
-            modelBuilder.Entity<CustomRole>()
-            .ToTable("AspNetRoles").Property(p => p.Id).HasColumnName("Id");
-            modelBuilder.Entity<CustomRole>()
-            .ToTable("AspNetRoles").Property(p => p.Name).HasColumnName("Name");
+                .HasKey(l => new { l.LoginProvider, l.ProviderKey })
+                .ToTable("AspNetUserLogins");
 
-            //modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
-            //modelBuilder.Entity<CustomUserRole>().ToTable("AspNetUserRoles");
-            //modelBuilder.Entity<CustomUserLogin>().ToTable("AspNetUserLogins");
-            //modelBuilder.Entity<CustomUserClaim>().ToTable("AspNetUserClaims");
-            //modelBuilder.Entity<CustomRole>().ToTable("AspNetRoles");
+
+            modelBuilder.Entity<CustomUserRole>().ToTable("AspNetUserRoles");
+
+            modelBuilder.Entity<CustomUserLogin>().ToTable("AspNetUserLogins");
+            modelBuilder.Entity<CustomUserClaim>().ToTable("AspNetUserClaims");
         }
     }
 }

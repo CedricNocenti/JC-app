@@ -77,21 +77,23 @@ namespace JC_PROJECT.Controllers
 
             // Ceci ne comptabilise pas les échecs de connexion pour le verrouillage du compte
             // Pour que les échecs de mot de passe déclenchent le verrouillage du compte, utilisez shouldLockout: true
-
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Tentative de connexion non valide.");
-                    return View(model);
-            }
+           
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Tentative de connexion non valide.");
+                        return View(model);
+                }
+           
+          
         }
 
         //
@@ -169,7 +171,7 @@ namespace JC_PROJECT.Controllers
                         {
                             try
                             {
-                                string idrole = this.GetRoleById(model.Role);
+                                string idrole = this.GetUserByRole(model.Role);
                                 string sql = "INSERT INTO \"AspNetUserRoles\" VALUES ( " + user.Id + " , '" + idrole + "')";
                                 using (var _db = new OracleConnection(connectionDBAUTH))
                                 {
@@ -222,7 +224,7 @@ namespace JC_PROJECT.Controllers
                             {
                                 try
                                 {
-                                    string idrole = this.GetRoleById(model.Role);
+                                    string idrole = this.GetUserByRole(model.Role);
                                     string sql = "INSERT INTO \"AspNetUserRoles\" VALUES ( " + user.Id + " , '" + idrole + "')";
                                     using (var _db = new OracleConnection(connectionDBAUTH))
                                     {
@@ -278,7 +280,7 @@ namespace JC_PROJECT.Controllers
             return View(model);
         }
 
-        public string GetRoleById(string pRoleName)
+        public string GetUserByRole(string pRoleName)
         {
             string sql = "SELECT \"Id\" FROM \"AspNetRoles\" WHERE \"Name\" = '" + pRoleName + "'";
             var _db = new OracleConnection(connectionDBAUTH);
