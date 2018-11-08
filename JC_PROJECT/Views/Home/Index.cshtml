@@ -1,10 +1,153 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Index";
 }
-
-<div class="jumbotron">
-    <h1>Juste à côté</h1>
-    <p class="lead">Vos commerçants à portée de clics :) </p>
-    <p><a href="/Home/About" class="btn btn-primary btn-lg">En savoir plus... &raquo;</a></p>
+<style>
+    .carousel-page {
+        width: 100%;
+        height: 400px;
+        background-color: #5f666d;
+        color: white;
+    }
+</style>
+<div id="my_carousel" class="carousel slide" data-ride="carousel">
+    <!-- Bulles -->
+    <ol class="carousel-indicators">
+        <li data-target="#my_carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#my_carousel" data-slide-to="1"></li>
+        <li data-target="#my_carousel" data-slide-to="2"></li>
+    </ol>
+    <!-- Slides -->
+    <div class="carousel-inner">
+        <!-- Page 1 -->
+        <div class="item active">
+            <div class="carousel-page">
+                <img src="~/Images/Image1.jpg" class="img-responsive" style="margin:0px auto;" />
+            </div>
+            <div class="carousel-caption">Page 1 de présentation</div>
+        </div>
+        <!-- Page 2 -->
+        <div class="item">
+            <div class="carousel-page">
+                <img src="~/Images/Image2.jpg" class="img-responsive img-rounded"
+                     style="margin:0px auto;" />
+            </div>
+            <div class="carousel-caption">Page 2 de présentation</div>
+        </div>
+        <!-- Page 3 -->
+        <div class="item">
+            <div class="carousel-page">
+                <img src="~/Images/Image3.jpg" class="img-responsive img-rounded"
+                     style="margin:0px auto;max-height:100%;" />
+            </div>
+            <div class="carousel-caption">Page 2 de présentation</div>
+        </div>
+    </div>
+    <!-- Contrôles -->
+    <a class="left carousel-control" href="#my_carousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#my_carousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
 </div>
+
+
+
+<div class="row">
+    <h2>Nouveaux Produits</h2>
+    <hr />
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <a href="#"><img src="~/Images/Nouveaux Produits/Produit1.jpg" /></a>
+            <div>
+                <h3><a href="/Product/Show/phone_6">oppo</a></h3>
+                <p>
+                    Panier Gourmand
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Images/Nouveaux Produits/Produit2.jpg" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div><div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Images/Nouveaux Produits/Produit3.jpg" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Images/Nouveaux Produits/Produit4.jpg" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <h2>Nouveaux Commerçants</h2>
+    <hr />
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Content/Image/2.png" />
+            <div>
+                <h3><a href="/Product/Show/f_1">oppo</a></h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Content/Image/2.png" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div><div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Content/Image/2.png" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="thumbnail">
+            <img src="~/Content/Image/2.png" />
+            <div>
+                <h3>oppo</h3>
+                <p>
+                    This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
