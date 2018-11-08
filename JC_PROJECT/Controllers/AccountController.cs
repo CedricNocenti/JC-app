@@ -171,29 +171,13 @@ namespace JC_PROJECT.Controllers
                         {
                             try
                             {
-                                string idrole = this.GetUserByRole(model.Role);
-                                string sql = "INSERT INTO \"AspNetUserRoles\" VALUES ( " + user.Id + " , '" + idrole + "')";
-                                using (var _db = new OracleConnection(connectionDBAUTH))
-                                {
-                                    try
-                                    {
-                                        _db.Open();
-                                        OracleCommand cmd = new OracleCommand(sql, _db);
-                                        cmd.ExecuteNonQuery();
-                                        _db.Close();
-                                    }
-                                    catch (OracleException OE)
-                                    {
-                                        return null;
-                                    }
-                                }
+                     
+                                UserManager.AddToRole(user.Id, model.Role);
                             }
                             catch (Exception ex)
                             {
 
-                            }
-                        
-                            
+                            }   
                         }
                         //Attention, user.UserName est l'email de l'utilisateur dans Identity
                         string sql2 = "INSERT INTO JC_CUSTOMER (CUSTOMER_ID, CUSTOMER_EMAIL, CUSTOMER_CREATION_DATE, CUSTOMER_MODIFICATION_DATE, CUSTOMER_PHONE,CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_STREET, CUSTOMER_POSTAL_CODE, CUSTOMER_CITY) " +
@@ -224,22 +208,7 @@ namespace JC_PROJECT.Controllers
                             {
                                 try
                                 {
-                                    string idrole = this.GetUserByRole(model.Role);
-                                    string sql = "INSERT INTO \"AspNetUserRoles\" VALUES ( " + user.Id + " , '" + idrole + "')";
-                                    using (var _db = new OracleConnection(connectionDBAUTH))
-                                    {
-                                        try
-                                        {
-                                            _db.Open();
-                                            OracleCommand cmd = new OracleCommand(sql, _db);
-                                            cmd.ExecuteNonQuery();
-                                            _db.Close();
-                                        }
-                                        catch (OracleException OE)
-                                        {
-                                            return null;
-                                        }
-                                    }
+                                    UserManager.AddToRole(user.Id, "Vendeur"); 
                                 }
                                 catch (Exception ex)
                                 {
@@ -261,7 +230,6 @@ namespace JC_PROJECT.Controllers
                                 {
                                     return null;
                                 }
-
                             }
                         }
                     }
