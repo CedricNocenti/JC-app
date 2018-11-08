@@ -9,6 +9,12 @@
         color: white;
     }
 </style>
+
+
+@if (!User.Identity.IsAuthenticated || User.IsInRole("Client"))
+{
+
+
 <div id="my_carousel" class="carousel slide" data-ride="carousel">
     <!-- Bulles -->
     <ol class="carousel-indicators">
@@ -148,6 +154,7 @@
     </div>
 </div>
 
+}
 
 
 
