@@ -212,7 +212,7 @@ namespace JC_PROJECT.Controllers
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    return null;
                                 }
                             }
                             string sql2 = "INSERT INTO JC_SELLER (SELLER_ID, SELLER_EMAIL, SELLER_CREATION_DATE, SELLER_MODIFICATION_DATE, SELLER_PHONE,SELLER_FIRSTNAME, SELLER_LASTNAME, SELLER_FUNCTION, SELLER_CREATED_BY, SHOP_ID) " +
