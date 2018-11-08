@@ -143,5 +143,10 @@ namespace JC_PROJECT.Controllers
                 return View();
             }
         }
+        public ActionResult DisplayShopByCategory()
+        {
+            
+            return View("~/Views/Shop/FruitsLegumes/DisplayShopByCategory.cshtml");
+        }
     }
 }

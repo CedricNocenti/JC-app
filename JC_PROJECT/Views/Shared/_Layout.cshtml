@@ -1,14 +1,12 @@
 ﻿<!DOCTYPE html>
 <style>
     .navbar-nav {
-
         text-align: center;
-
     }
 </style>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Juste à coté</title>
@@ -39,14 +37,12 @@
     </div>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Fruits & Légumes</a></li>
-                <li><a href="#">Fromagerie</a></li>
-                <li><a href="#">Boulangerie</a></li>
-                <li><a href="#">Patisserie</a></li>
-                <li><a href="#">Traiteur</a></li>
-                <li><a href="#">Poissonerie</a></li>
+            <ul class="nav navbar-nav-center">
+                <li>@Html.ActionLink("Fruits & Légumes", "DisplayShopByCategory", "Shop")</li>
+                <li class="active"><a href="~/Views/Shop/FruitsLegumes/Index.cshtml">Fromagerie</a></li>
+                <li class="active"><a href="~/Views/Shop/FruitsLegumes/Index.cshtml">Boulangerie & Patisserie</a></li>
+                <li class="active"><a href="~/Views/Shop/FruitsLegumes/Index.cshtml">Traiteur</a></li>
+                <li class="active"><a href="~/Views/Shop/FruitsLegumes/Index.cshtml">Poissonerie</a></li>
             </ul>
         </div>
     </nav>
@@ -63,4 +59,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
