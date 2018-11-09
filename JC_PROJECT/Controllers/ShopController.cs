@@ -8,11 +8,14 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using JC_PROJECT.Controllers;
 
 namespace JC_PROJECT.Controllers
 {
     public class ShopController : Controller
     {
+
         // GET: Shop
         string Baseurl = "http://localhost:62000/";
         public async Task<ActionResult> Index()
@@ -49,6 +52,7 @@ namespace JC_PROJECT.Controllers
         // GET: Shop/Details/5
         public async Task<ActionResult> DisplayProducts(int id)
         {
+            
             List<Product> Products = new List<Product>();
 
             using (var client = new HttpClient())
@@ -75,6 +79,42 @@ namespace JC_PROJECT.Controllers
                 }
                 //returning the employee list to view  
                 return View(Products);
+            }
+        }
+
+        public async Task<ActionResult> ProductShopSeller()
+        {
+            Int32 idUser = User.Identity.GetUserId<int>();
+            Seller seller = new Seller();
+            seller = await new SellerController().SellerbyId(idUser);
+
+        
+            List<Product> ProductSeller = new List<Product>();
+
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(Baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                HttpResponseMessage Res = await client.GetAsync("api/product/GetByIdShop/" + seller.shopId);
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api   
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response recieved from web api and storing into the Employee list  
+                    ProductSeller = JsonConvert.DeserializeObject<List<Product>>(EmpResponse);
+
+                }
+                //returning the employee list to view  
+                return View(ProductSeller);
             }
         }
 

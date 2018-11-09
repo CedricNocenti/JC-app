@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -218,7 +219,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\SellerModel.cs" />
+    <Compile Include="Models\Seller.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -295,16 +296,13 @@
     <Content Include="Views\Product\DisplayAllProducts.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Shop\FruitsLegumes\DisplayShopByCategory.cshtml" />
+    <Content Include="Views\Shop\DisplayShopByCategory.cshtml" />
+    <Content Include="Views\Shop\ProductShopSeller.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Seller\" />
-    <Folder Include="Views\Shop\BoulangeriePatisserie\" />
-    <Folder Include="Views\Shop\Fromagerie\" />
-    <Folder Include="Views\Shop\Possonerie\" />
-    <Folder Include="Views\Shop\Traiteur\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
