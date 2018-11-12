@@ -202,7 +202,7 @@ namespace JC_PROJECT.Controllers
                                 var response = client.PostAsJsonAsync("api/customer/", customer).Result;
                                 if (response.IsSuccessStatusCode)
                                 {
-                                    return RedirectToAction("Index");
+                                    return RedirectToAction("Index", "Home");
                                 }
                             }
                     }
@@ -239,7 +239,7 @@ namespace JC_PROJECT.Controllers
                                 var response = client.PostAsJsonAsync("api/seller/", seller).Result;
                                 if (response.IsSuccessStatusCode)
                                 {
-                                    return RedirectToAction("Index");
+                                    return RedirectToAction("Index", "Home");
                                 }
                             }
                         }
