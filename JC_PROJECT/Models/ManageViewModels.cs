@@ -10,10 +10,8 @@ namespace JC_PROJECT.Models
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
-        
     }
 
     public class ManageLoginsViewModel
@@ -41,26 +39,6 @@ namespace JC_PROJECT.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class SetEmailViewModel
-    {
-        [Required]
-        [StringLength(128, ErrorMessage = "L'adresse mail ne doit pas dépasser {1} caractères")]
-        [Display(Name = "Adresse Email actuelle")]
-        
-        public string EmailActuel { get; set; }
-
-        [Required]
-        [StringLength(128, ErrorMessage = "L'adresse mail ne doit pas dépasser {1} caractères")]
-        [Display(Name = "Nouvelle Adresse Email")]
-        public string NouvelEmail { get; set; }
-
-        [Required]
-        [StringLength(128, ErrorMessage = "L'adresse mail ne doit pas dépasser {1} caractères")]
-        [Display(Name = "Confirmation nouvelle Adresse Email")]
-        [Compare("NouvelEmail", ErrorMessage = "Le nouvel Email et l'email de confirmation ne correspondent pas.")]
-        public string ConfirmerNouveauMail { get; set; }
-
-    }
     public class ChangePasswordViewModel
     {
         [Required]

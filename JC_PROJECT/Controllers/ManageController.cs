@@ -7,10 +7,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JC_PROJECT.Models;
-using System.Security.Claims;
-using Oracle.ManagedDataAccess.Client;
-using System.Net.Http.Headers;
-using System.Net.Http;
 
 namespace JC_PROJECT.Controllers
 {
@@ -19,9 +15,7 @@ namespace JC_PROJECT.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public const string connectionDB = "User Id=APP_DEV;Password=appDev2018!;Data Source=54.38.230.175/orcldev";
-        public const string connectionDBAUTH = "User Id=AUTH_DEV;Password=authDev2018!;Data Source=54.38.230.175/orcldev";
-        public const string Baseurl = "http://localhost:62000/";
+
         public ManageController()
         {
         }
@@ -38,9 +32,9 @@ namespace JC_PROJECT.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set
-            {
-                _signInManager = value;
+            private set 
+            { 
+                _signInManager = value; 
             }
         }
 
@@ -76,7 +70,6 @@ namespace JC_PROJECT.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
-                Email = await UserManager.GetEmailAsync(User.Identity.GetUserId<int>()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
             return View(model);
@@ -330,77 +323,6 @@ namespace JC_PROJECT.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        public async Task<ActionResult> ChangeEmail(SetEmailViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-                if (user != null)
-                {
-                    if (user.Email != model.EmailActuel)
-                    {
-                        ModelState.AddModelError("EmailActuel", "L'email actuel n'est pas correct");
-                    }
-                    else
-                    {
-                        //Mettre à jour l'email et le username dans les tables AspNetIdentity (Email = UserName)
-                        user.Email = model.NouvelEmail;
-                        user.UserName = model.NouvelEmail;
-                        var result = await UserManager.UpdateAsync(user);
-
-                        if (result.Succeeded)
-                        {
-                            //Récupérer le role de l'utilisateur connecté (Client ou Vendeur) pour pouvoir mettre à jour la table JC_CUSTOMER ou JC_SELLER
-                            var roles = await UserManager.GetRolesAsync(user.Id);
-                            if (roles != null)
-                            {
-                                if (roles[0] == "Client")
-                                {
-                                    
-                                    using (var client = new HttpClient())
-                                    {
-                                        //Passing service base url  
-                                        client.BaseAddress = new Uri(Baseurl);
-                                        var response = client.PutAsJsonAsync("api/customer/UpdateEmail/" + user.Id, model.NouvelEmail ).Result;
-                                        if (response.IsSuccessStatusCode)
-                                        {
-                                            return RedirectToAction("Index");
-                                        }
-                                    }
-                                }
-
-                            }
-                            else
-                            {
-                                if (roles[0] == "Vendeur")
-                                {
-                                    
-                                    //Mettre jour l'email du vendeur sur la table JC_SELLER via l'api
-                                    using (var client = new HttpClient())
-                                    {
-                                        //Passing service base url  
-                                        client.BaseAddress = new Uri(Baseurl);
-                                        var response = client.PutAsJsonAsync("api/seller/UpdateEmail/" + user.Id, model.NouvelEmail).Result;
-                                        if (response.IsSuccessStatusCode)
-                                        {
-                                            return RedirectToAction("Index");
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-                        }
-
-                    }
-
-                }
-            }
-            return View(model);
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -412,7 +334,7 @@ namespace JC_PROJECT.Controllers
             base.Dispose(disposing);
         }
 
-        #region Programmes d'assistance
+#region Programmes d'assistance
         // Utilisé pour la protection XSRF lors de l'ajout de connexions externes
         private const string XsrfKey = "XsrfId";
 
@@ -455,7 +377,7 @@ namespace JC_PROJECT.Controllers
         private bool HasEmail()
         {
             var user = UserManager.FindById(User.Identity.GetUserId<int>());
-            if (user != null)
+            if(user != null)
             {
                 return user.Email != null;
             }
@@ -474,6 +396,6 @@ namespace JC_PROJECT.Controllers
             Error
         }
 
-        #endregion
+#endregion
     }
 }
