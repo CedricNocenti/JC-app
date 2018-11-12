@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JC_PROJECT.Models;
 using Oracle.ManagedDataAccess.Client;
+using System.Net.Http;
 
 namespace JC_PROJECT.Controllers
 {
@@ -20,6 +21,7 @@ namespace JC_PROJECT.Controllers
         private ApplicationUserManager _userManager;
         public const string connectionDB = "User Id=APP_DEV;Password=appDev2018!;Data Source=54.38.230.175/orcldev";
         public const string connectionDBAUTH = "User Id=AUTH_DEV;Password=authDev2018!;Data Source=54.38.230.175/orcldev";
+        public const string Baseurl = "http://localhost:62000/";
         public AccountController()
         {
         }
@@ -157,7 +159,7 @@ namespace JC_PROJECT.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
-               
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -180,23 +182,29 @@ namespace JC_PROJECT.Controllers
                             }   
                         }
                         //Attention, user.UserName est l'email de l'utilisateur dans Identity
-                        string sql2 = "INSERT INTO JC_CUSTOMER (CUSTOMER_ID, CUSTOMER_EMAIL, CUSTOMER_CREATION_DATE, CUSTOMER_MODIFICATION_DATE, CUSTOMER_PHONE,CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_STREET, CUSTOMER_POSTAL_CODE, CUSTOMER_CITY) " +
-                            "VALUES( " + user.Id + " , '" + user.UserName + "' , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , '" + user.PhoneNumber + "', '" + model.FirstName + "', '" + model.JLastName + "', '" + model.Street + "', '" + model.PostalCode + "', '" + model.City + "')";
-                        using (var _db = new OracleConnection(connectionDB))
-                        {
-                            try
+                        //Insérer le nouveau client dans JC_CUSTOMER via l'api
+                       
+                            using (var client = new HttpClient())
                             {
-                                _db.Open();
-                                OracleCommand cmd = new OracleCommand(sql2, _db);
-                                cmd.ExecuteNonQuery();
-                                _db.Close();
+                            //Passing service base url  
+                            Customer customer = new Customer();
+                            customer.Email = user.Email;
+                            customer.Identifiant = user.Id;
+                            customer.Nom = model.FirstName;
+                            customer.Prenom = model.JLastName;
+                            customer.Rue = model.Street;
+                            customer.Telephone = user.PhoneNumber;
+                            customer.CP = model.PostalCode;
+                            customer.DateCreation = DateTime.Now;
+                            customer.Modification = DateTime.Now;
+                            customer.Ville = model.City;
+                                client.BaseAddress = new Uri(Baseurl);
+                                var response = client.PostAsJsonAsync("api/customer/", customer).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    return RedirectToAction("Index");
+                                }
                             }
-                            catch (OracleException OE)
-                            {
-                                return null;
-                            }
-
-                        }    
                     }
                     else
                     {
@@ -215,20 +223,23 @@ namespace JC_PROJECT.Controllers
                                     return null;
                                 }
                             }
-                            string sql2 = "INSERT INTO JC_SELLER (SELLER_ID, SELLER_EMAIL, SELLER_CREATION_DATE, SELLER_MODIFICATION_DATE, SELLER_PHONE,SELLER_FIRSTNAME, SELLER_LASTNAME, SELLER_FUNCTION, SELLER_CREATED_BY, SHOP_ID) " +
-                            "VALUES( " + user.Id + " , '" + user.UserName + "' , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , TO_DATE('" + DateTime.Now + "', 'DD/MM/YYYY HH24:MI:SS') , '" + user.PhoneNumber + "', '" + model.FirstName + "', '" + model.JLastName + "', '" + model.Function + "', " + model.CreatedBy + ", 1)";
-                            using (var _db = new OracleConnection(connectionDB))
+                            using (var client = new HttpClient())
                             {
-                                try
+                                //Passing service base url  
+                                Seller seller = new Seller();
+                                seller.Email = user.Email;
+                                seller.Identifiant = user.Id;
+                                seller.Nom = model.FirstName;
+                                seller.Prenom = model.JLastName;
+                                seller.Telephone = user.PhoneNumber;
+                                seller.Creation = DateTime.Now;
+                                seller.Function = model.Function;
+                                seller.ShopId = 1;
+                                client.BaseAddress = new Uri(Baseurl);
+                                var response = client.PostAsJsonAsync("api/seller/", seller).Result;
+                                if (response.IsSuccessStatusCode)
                                 {
-                                    _db.Open();
-                                    OracleCommand cmd = new OracleCommand(sql2, _db);
-                                    cmd.ExecuteNonQuery();
-                                    _db.Close();
-                                }
-                                catch (OracleException OE)
-                                {
-                                    return null;
+                                    return RedirectToAction("Index");
                                 }
                             }
                         }
@@ -246,28 +257,6 @@ namespace JC_PROJECT.Controllers
 
             // Si nous sommes arrivés là, un échec s’est produit. Réafficher le formulaire
             return View(model);
-        }
-
-        public string GetUserByRole(string pRoleName)
-        {
-            string sql = "SELECT \"Id\" FROM \"AspNetRoles\" WHERE \"Name\" = '" + pRoleName + "'";
-            var _db = new OracleConnection(connectionDBAUTH);
-            try
-            {
-                _db.Open();
-                OracleCommand cmd = new OracleCommand(sql, _db);
-                OracleDataReader dr = cmd.ExecuteReader();
-                dr.Read();
-                return dr.GetString(0);
-                _db.Close();
-            }
-            catch(OracleException OE)
-            {
-                return null;
-
-            }
-            
-
         }
 
         //
