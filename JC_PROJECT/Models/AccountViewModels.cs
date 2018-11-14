@@ -112,6 +112,23 @@ namespace JC_PROJECT.Models
         [Display(Name="Fonction")]
         public string Function { get; set; }
 
+        [RequiredIf("Role", "Vendeur", "Attention, nom du magasin requis!")]
+        [StringLength(50, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.")]
+        [Display(Name = "Nom du magasin")]
+        public string ShopName { get; set; }
+
+       
+        [StringLength(255, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.")]
+        [Display(Name = "Description du magasin")]
+        [DataType(DataType.MultilineText)]
+        public string ShopDescription { get; set; }
+
+        [RequiredIf("Role","Vendeur","Nombre d'employés du magasin requis!")]
+        [Display(Name = "Description du magasin")]
+
+        public Int32 ShopNbEmployees { get; set; }
+
+
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -122,6 +139,8 @@ namespace JC_PROJECT.Models
         [Display(Name = "Confirmer le mot de passe ")]
         [Compare("Password", ErrorMessage = "Les mots de passe ne correspondent pas")]
         public string ConfirmPassword { get; set; }
+
+
       
     }
 
