@@ -45,7 +45,8 @@
                         if (User.IsInRole("Vendeur"))
                         {
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Mes produits", "ProductShopSeller", "Shop")</li>
+                            <li>@Html.ActionLink("Mes produits", "ProductBySeller", "Product")</li>
+                            <li>@Html.ActionLink("Ajouter produit", "CreateView", "Product")</li>
                             <li>@Html.ActionLink("À propos de", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>

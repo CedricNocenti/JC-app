@@ -291,13 +291,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
-    <Content Include="Views\Shop\DisplayProducts.cshtml" />
+    <Content Include="Views\Product\ProductByShop.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\DisplayAllProducts.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Shop\DisplayShopByCategory.cshtml" />
-    <Content Include="Views\Shop\ProductShopSeller.cshtml" />
+    <Content Include="Views\Product\ProductBySeller.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

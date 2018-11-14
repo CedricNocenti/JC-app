@@ -16,7 +16,7 @@
         <p> @Html.DisplayFor(modelItem => item.Rue)</p>
         <p> @Html.DisplayFor(modelItem => item.CodePostale)</p>
         <p> @Html.DisplayFor(modelItem => item.Type)</p>
-        @Html.ActionLink("Voir produits", "DisplayProducts", new { id = item.Identifiant })
+        @Html.ActionLink("Voir produits", "ProductByShop","Product", new { id = item.Identifiant },null)
     </div>
 
       

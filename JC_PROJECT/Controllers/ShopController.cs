@@ -49,47 +49,14 @@ namespace JC_PROJECT.Controllers
             }
         }
         
-        // GET: Shop/Details/5
-        public async Task<ActionResult> DisplayProducts(int id)
+
+        public async Task<Shop> ShopBySeller()
         {
-            
-            List<Product> Products = new List<Product>();
-
-            using (var client = new HttpClient())
-            {
-                //Passing service base url  
-                client.BaseAddress = new Uri(Baseurl);
-
-                client.DefaultRequestHeaders.Clear();
-                //Define request data format  
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("api/product/GetByIdShop/" + id);
-
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (Res.IsSuccessStatusCode)
-                {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    Products = JsonConvert.DeserializeObject<List<Product>>(EmpResponse);
-
-                }
-                //returning the employee list to view  
-                return View(Products);
-            }
-        }
-
-        public async Task<ActionResult> ProductShopSeller()
-        {
-            Int32 idUser = User.Identity.GetUserId<int>();
+            int idUser = User.Identity.GetUserId<int>();
             Seller seller = new Seller();
             seller = await new SellerController().SellerbyId(idUser);
 
-        
-            List<Product> ProductSeller = new List<Product>();
+            Shop shop = new Shop();
 
             using (var client = new HttpClient())
             {
@@ -101,7 +68,7 @@ namespace JC_PROJECT.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("api/product/GetByIdShop/" + seller.shopId);
+                HttpResponseMessage Res = await client.GetAsync("api/shop/" + seller.shopId);
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (Res.IsSuccessStatusCode)
@@ -110,19 +77,26 @@ namespace JC_PROJECT.Controllers
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
                     //Deserializing the response recieved from web api and storing into the Employee list  
-                    ProductSeller = JsonConvert.DeserializeObject<List<Product>>(EmpResponse);
+                    shop = JsonConvert.DeserializeObject<Shop>(EmpResponse);
 
                 }
                 //returning the employee list to view  
-                return View(ProductSeller);
+                return shop;
             }
+
+
+
+
+
         }
 
+
         // GET: Shop/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+          public ActionResult Create()
+          {
+              return View();
+          }
+
 
         // POST: Shop/Create
         [HttpPost]
