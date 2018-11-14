@@ -68,7 +68,7 @@ namespace JC_PROJECT.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("api/shop/" + seller.shopId);
+                HttpResponseMessage Res = await client.GetAsync("api/shop/" + seller.ShopId);
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (Res.IsSuccessStatusCode)
