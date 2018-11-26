@@ -300,6 +300,7 @@
     <Content Include="Views\Shop\DisplayShopByCategory.cshtml" />
     <Content Include="Views\Product\ProductBySeller.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -163,7 +163,6 @@ namespace JC_PROJECT.Controllers
             return View();
         }
 
-
         [HttpPost]
         public  async Task<ActionResult> Create(Product product)
         {
@@ -202,25 +201,68 @@ namespace JC_PROJECT.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+
+            Product product = new Product();
+
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(Baseurl);
+
+                client.DefaultRequestHeaders.Clear();
+
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                HttpResponseMessage Res = await client.GetAsync("api/product/"+id);
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (Res.IsSuccessStatusCode)
+                {
+                    var prdresponse = Res.Content.ReadAsStringAsync().Result;
+                    product = JsonConvert.DeserializeObject<Product>(prdresponse);
+                    return View(product);
+                    
+                }
+                else
+                {
+                    return RedirectToAction("ProductBySeller", "Product");
+                }
+
+
+            }
+            
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public  ActionResult Edit(Product product)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                using (var client = new HttpClient())
+                {
+                    //Passing service base url  
+                    client.BaseAddress = new Uri(Baseurl);
+
+                    client.DefaultRequestHeaders.Clear();
+
+                    //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                     var response = client.PutAsJsonAsync("api/product/", product).Result;
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("ProductBySeller", "Product");
+
+                    }
+                    else
+                    {
+                    return View(product.Identifiant);
+                    }
+
+
+                }
+
         }
 
         // GET: Product/Delete/5
@@ -244,6 +286,6 @@ namespace JC_PROJECT.Controllers
                 return View();
             }
         }
-        
+       
     }
 }
