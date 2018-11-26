@@ -265,6 +265,7 @@ namespace JC_PROJECT.Controllers
 
         }
 
+
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
